@@ -29,7 +29,7 @@ function start()
     // create shader
     context.program = twgl.createProgramInfo(context.gl, [
         shaders["quad.vert"],
-        shaders["shader.frag"]])
+        shaders["color.frag"]])
     
     // settings for shaders
     context.uniforms = {
