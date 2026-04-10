@@ -29,7 +29,7 @@ function start()
     // create shader
     context.program = twgl.createProgramInfo(context.gl, [
         shaders["quad.vert"],
-        shaders["color.frag"]])
+        shaders["shader.frag"]])
     
     // settings for shaders
     context.uniforms = {
@@ -49,6 +49,11 @@ function start()
             flipY: true,
         }),
     }
+
+    dom("canvas").addEventListener("mousemove", (e) => {
+        var height = context.gl.canvas.height
+        context.uniforms.mouse = [ e.clientX, height - e.clientY ]
+    })
 
     // example with cube
     // create_cube(context)

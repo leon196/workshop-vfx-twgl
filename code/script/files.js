@@ -13,6 +13,7 @@ var files = [
   "atlas.frag",
   "effect.frag",
   "mesh.frag",
+  "mouse.frag",
 ]
 
 // timestamp to ignore cache when reload
