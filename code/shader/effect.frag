@@ -23,17 +23,11 @@ float remap(float value, float min1, float max1, float min2, float max2) {
 
 void main()
 {
+    // pixel coordinates
     vec2 uv = gl_FragCoord.xy / resolution;
-	vec2 ratio = vec2(resolution.x/resolution.y,1);
-    vec2 p = 2.*(uv-.5)*ratio;
-    float pixelate = value*100.;
-    vec2 uv_pixelate = floor(uv*pixelate)/pixelate;
-    vec3 color = texture2D(image, uv_pixelate).rgb;
-    float gray = (color.r+color.g+color.b)/3.;
-    vec2 grid = vec2(16,18);
-    float index = floor(gray*grid.x*grid.y);
-    vec2 cell = vec2(mod(index, grid.x), floor(index/grid.x));
-    vec2 uv_cell = (fract(uv*pixelate) + cell)/grid;
-    color *= texture2D(atlas, uv_cell).rgb;
+    
+    // sample image color
+    vec3 color = texture2D(image, uv).rgb;
+    
 	gl_FragColor = vec4(color,1);
 }

@@ -2,8 +2,17 @@
 export const shaders = {}
 
 var files = [
-  "vertex.vert",
+  // vertex shader
+  "quad.vert",
+  "mesh.vert",
+
+  // pixel shader
+  "color.frag",
+  "shader.frag",
+  "image.frag",
+  "atlas.frag",
   "effect.frag",
+  "mesh.frag",
 ]
 
 // timestamp to ignore cache when reload

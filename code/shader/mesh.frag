@@ -1,0 +1,17 @@
+precision mediump float;
+
+// settings from app.js
+uniform float time;
+uniform float value;
+
+varying vec3 v_position;
+varying vec2 v_texcoord;
+varying vec3 v_normal;
+
+void main()
+{
+    vec3 color = v_normal*0.5+0.5;
+
+    // output result
+	gl_FragColor = vec4(color,1);
+}

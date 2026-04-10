@@ -2,10 +2,8 @@ import * as twgl from "./twgl-full.module.js"
 import * as gui from "./gui.js"
 import { shaders } from "./files.js"
 import { quad } from "./mesh.js"
-
-// helpers
+import { create_cube, draw_cube } from "./3d.js"
 var dom = (selector) => { return document.querySelector(selector) }
-var print = (log) => { return console.log(log) }
 
 // main container
 const context = {}
@@ -14,7 +12,6 @@ const context = {}
 const settings = {
     value: 0.5,
 }
-
 
 // start
 function start()
@@ -31,8 +28,8 @@ function start()
     
     // create shader
     context.program = twgl.createProgramInfo(context.gl, [
-        shaders["vertex.vert"],
-        shaders["effect.frag"]])
+        shaders["quad.vert"],
+        shaders["color.frag"]])
     
     // settings for shaders
     context.uniforms = {
@@ -45,12 +42,16 @@ function start()
             flipY: true,
         }),
 
+        // another image
         atlas: twgl.createTexture(context.gl, {
             src: "./content/image/adlfont_16x18.png",
             minMag: context.gl.NEAREST,
             flipY: true,
         }),
     }
+
+    // example with cube
+    // create_cube(context)
 
     requestAnimationFrame(update)
 }
@@ -65,13 +66,18 @@ function update(time)
     const shader_settings = context.uniforms
     const mesh_buffer = context.buffer
 
+    // store time elapsed
+    context.time = time/1000.0
+
     // resize canvas and viewport
     twgl.resizeCanvasToDisplaySize(canvas)
     webgl.viewport(0, 0, canvas.width, canvas.height)
 
     // prepare to use shader
     webgl.useProgram(shader.program)
-    shader_settings.time = time/1000.0
+
+    // store settings to shader
+    shader_settings.time = context.time
     shader_settings.resolution = [canvas.width, canvas.height]
     Object.keys(settings).forEach(key => 
         shader_settings[key] = settings[key])
@@ -82,6 +88,7 @@ function update(time)
 
     // draw
     twgl.drawBufferInfo(webgl, mesh_buffer)
+    // draw_cube(context)
 
     // repeat
     requestAnimationFrame(update)
